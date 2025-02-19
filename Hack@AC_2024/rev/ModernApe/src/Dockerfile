@@ -1,0 +1,11 @@
+FROM python:3.10
+EXPOSE 8040
+
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
+COPY . /app
+
+CMD ["python3", "server_side.py"]
