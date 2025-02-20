@@ -1,23 +1,14 @@
-# start by pulling the python image
-FROM python:3.8-alpine
-
-EXPOSE 8000
-
-# copy the requirements file into the image
-COPY ./requirements.txt /app/requirements.txt
-
-# switch working directory
+FROM python:3.13-alpine
 WORKDIR /app
+EXPOSE 8000
 
 RUN apk update
 RUN apk add chromium
-# install the dependencies and packages in the requirements file
+
+COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
-# copy every content from the local file to the image
 COPY . /app
 
-# configure the container to run in an executed manner
-ENTRYPOINT [ "python" ]
-
-CMD ["app.py" ]
+ENTRYPOINT ["python"]
+CMD ["app.py"]

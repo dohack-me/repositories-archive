@@ -1,25 +1,22 @@
-# start by pulling the python image
-FROM python:3.8-alpine
-
+FROM python:3.13-alpine
+WORKDIR /app
 EXPOSE 8000
 
-# switch working directory
-WORKDIR /app
+# User is added to be more similar to original challenge, and because the user who runs the flask app matters for this challenge
+RUN adduser --uid 1001 --disabled-password nonroot
 
 RUN apk update
 RUN apk add firefox
 RUN apk add font-terminus
+
 COPY ./requirements.txt /app/requirements.txt
-# install the dependencies and packages in the requirements file
 RUN pip install -r requirements.txt
 
-# copy every content from the local file to the image
-COPY . /app
 RUN mkdir /app/screenshots
 RUN chmod 777 /app/screenshots
-RUN adduser --uid 1001 --disabled-password nonroot
-USER 1001
-# configure the container to run in an executed manner
-ENTRYPOINT [ "python" ]
 
-CMD ["app.py" ]
+COPY . /app
+
+USER 1001
+ENTRYPOINT ["python"]
+CMD ["app.py"]

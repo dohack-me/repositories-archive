@@ -1,30 +1,20 @@
 FROM zenika/alpine-chrome:with-puppeteer
-
-EXPOSE 8000
-
-COPY ./requirements.txt /app/requirements.txt
-# switch working directory
 WORKDIR /app
+EXPOSE 8000
 
 USER root
 
-# Install python
 RUN apk update
 RUN apk add --no-cache python3 py3-pip
 
-RUN python --version
-RUN pip --version
-
-# install the dependencies and packages in the requirements file
+COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt --break-system-packages
 
-
-# copy every content from the local file to the image
-COPY . /app
-
+COPY ./package.json /app/package.json
+COPY ./package-lock.json /app/package-lock.json
 RUN npm ci
 
+COPY . /app
 
-
-# run
-CMD ["python3", "app.py"]
+ENTRYPOINT ["python3"]
+CMD ["app.py"]
