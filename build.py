@@ -34,7 +34,7 @@ def build_image(repository: str, category: str, challenge: str):
             rm=True,
         )
         image.tag(f"{REGISTRY}/{image_name}")
-        print(f"Successfully built {image_name}")
+        print(f"Successfully built {REGISTRY}/{image_name}")
     except docker.errors.BuildError as ex:
-        print(f"FAILED to build {image_name}")
+        print(f"FAILED to build {REGISTRY}/{image_name}")
         print(ex)

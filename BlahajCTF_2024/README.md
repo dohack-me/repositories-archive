@@ -26,4 +26,10 @@ Some changes were made.
 As stated in the [root README](../README.md), challenge Dockerfile's received additional steps,
 mostly consisting of `EXPOSE` instructions.
 
-No changes were made to the challenge's source code.
+No changes were made to the challenge's source code, except the following:
+- web/babysql/requirements.txt
+  - Added `markupsafe==2.0.1` due to https://github.com/pallets/markupsafe/issues/304
+- web/screenshooter/Dockerfile
+  - Added `RUN mkdir /app/screenshots` due to oversight in the original source code. There should have been an empty folder at src/screenshots, but git does not commit empty folders. Therefore, the remote lacks the empty screenshots folder, and the build fails when it tries to chmod it.
+- web/shark-lotto/Dockerfile
+  - Changed `COPY .. /app` to `COPY . /app`, because the challenge source files were in the root directory of the challenge (for some reason)
