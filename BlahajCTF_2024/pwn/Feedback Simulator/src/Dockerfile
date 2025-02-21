@@ -1,31 +1,22 @@
-FROM kalilinux/kali-rolling
+FROM debian:12-slim
+WORKDIR /srv/app
+EXPOSE 8000
 
-RUN apt-get update && \
-    apt-get install -y socat && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y socat
 
-COPY ./libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
-COPY ./ld-linux-x86-64.so.2 /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+COPY ./libc.so.6 /srv/app/libc.so.6
+RUN chmod 555 /srv/app/libc.so.6
 
-RUN useradd -m -s /bin/bash ctfuser \
-    && echo 'ctfuser:ctfpassword' | chpasswd \
-    && mkdir /home/ctfuser/challenge \
-    && chown -R root:ctfuser /home/ctfuser/challenge \
-    && chmod 555 /home/ctfuser/challenge
+COPY ./ld-linux-x86-64.so.2 /srv/app/ld-linux-x86-64.so.2
+RUN chmod 555 /srv/app/ld-linux-x86-64.so.2
 
-COPY ./program /home/ctfuser/challenge/
-COPY ./flag.txt /home/ctfuser/challenge/
-RUN chmod 555 /home/ctfuser \
-    && chown -R root:ctfuser /home/ctfuser/challenge \
-    && chmod 555 /home/ctfuser/challenge \
-    && chown root:ctfuser /home/ctfuser/.bashrc && chmod 444 /home/ctfuser/.bashrc
+COPY ./entry.sh /srv/app/entry.sh
+RUN chmod 555 /srv/app/entry.sh
 
-RUN echo "cd /home/ctfuser/challenge" >> /home/ctfuser/.bashrc
+COPY ./flag.txt /srv/app/flag.txt
+RUN chmod 444 /srv/app/flag.txt
 
-RUN chsh -s /bin/bash ctfuser
-RUN chmod 700 /home/ctfuser
+COPY ./program /srv/app/run
+RUN chmod 555 /srv/app/run
 
-WORKDIR /home/ctfuser/challenge
-USER ctfuser 
-
-CMD socat TCP-LISTEN:8000,reuseaddr,fork EXEC:"/home/ctfuser/challenge/program,stderr"
+CMD ["/srv/app/entry.sh"]

@@ -1,25 +1,22 @@
-# start by pulling the python image
-FROM python:3.11-slim-bookworm
+FROM debian:12-slim
+WORKDIR /srv/app
+EXPOSE 8000
 
-# switch working directory
-WORKDIR /app
+RUN apt-get update && apt-get install -y socat
 
-# copy every content from the local file to the image
-COPY . /app
+COPY ./libc.so.6 /srv/app/libc.so.6
+RUN chmod 555 /srv/app/libc.so.6
 
-RUN chmod 555 /app/enotes
-RUN chmod 555 /app/libc.so.6
-RUN chmod 555 /app/ld-linux-x86-64.so.2
-RUN chmod 444 /app/flag.txt
+COPY ./ld-linux-x86-64.so.2 /srv/app/ld-linux-x86-64.so.2
+RUN chmod 555 /srv/app/ld-linux-x86-64.so.2
 
-RUN addgroup --gid 1001 nonroot && \
-    adduser --uid 1001 --gid 1001 --disabled-password --gecos "" nonroot && \
-    echo 'nonroot ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
-USER 1001
+COPY ./entry.sh /srv/app/entry.sh
+RUN chmod 555 /srv/app/entry.sh
 
-RUN pip install psutil
+COPY ./flag.txt /srv/app/flag.txt
+RUN chmod 444 /srv/app/flag.txt
 
-# configure the container to run in an executed manner
-ENTRYPOINT [ "python" ]
+COPY ./enotes /srv/app/run
+RUN chmod 555 /srv/app/run
 
-CMD ["app.py" ]
+CMD ["/srv/app/entry.sh"]
