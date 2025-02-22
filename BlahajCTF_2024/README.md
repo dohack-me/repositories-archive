@@ -13,9 +13,18 @@ https://github.com/blahajctf/blahajctf24-public/tree/master/Challenges
 These challenges include large files, which my backend (supabase free tier lmao) doesn't support at the moment.
 Otherwise, both challenges have no other issues. I am looking to include both of them when I deal with the storage problem.
 
+- misc
+  - modelanswer
+  - modelanswer 2
+
+Not sure if my VPS can handle Tensorflow stuff and I don't really want to try lmao
+
+Other challenges not listed here might be missing as you read this. I will try to add those when I can!
+
 # Notes
 
 Strangely, some challenge sources lacked its metadata (challenge.yml). 
+
 This means it is impossible to determine the challenge description or its authors. 
 For affected challenges, this was noted down on the website.
 
