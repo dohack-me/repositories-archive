@@ -7,8 +7,11 @@ https://github.com/blahajctf/blahajctf24-public/tree/master/Challenges
 - forensics
   - memory
   - wireshonk
-    - Both challenges include super large files (1GB and 2GB respectively), which my backend (supabase free tier lmao) doesn't support at the moment.
-    - Otherwise, both challenges have no other issues. I am looking to include both of them when I deal with the storage problem.
+- rev
+  - blahajcyptor
+
+These challenges include large files, which my backend (supabase free tier lmao) doesn't support at the moment.
+Otherwise, both challenges have no other issues. I am looking to include both of them when I deal with the storage problem.
 
 # Notes
 
