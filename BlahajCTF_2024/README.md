@@ -42,3 +42,5 @@ No changes were made to the challenge's source code, except the following:
   - Added `markupsafe==2.0.1` due to https://github.com/pallets/markupsafe/issues/304
 - web/calculator/app.py
   - Removed debug route `/supersecretadminpanelasdf123456789/<newpage>`
+- pwn/enotes/enotes.c
+  - Modified to not spawn a new process on connection. Not super sure if this still works
