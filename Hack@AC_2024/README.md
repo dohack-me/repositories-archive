@@ -4,9 +4,14 @@ https://github.com/Coding-Competition-Team/HACK-AC-2024
 
 # Omitted challenges
 
-- programming (personal judgement; irrelevant)
+- programming
   - gearup
   - hdb
   - sudoku
+
+Personal judgement, irrelevant
+
 - web
-  - fatherboat-3 (compose stacks not supported)
+  - fatherboat-3
+
+Stack not supported by orchestrator
