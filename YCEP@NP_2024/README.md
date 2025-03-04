@@ -17,4 +17,4 @@ I am looking to include both of them when I deal with the storage problem.
   - SQLi
 
 Stack not supported by orchestrator.
-I could rewrite the app to use SQLite, but with how generic this challenge is, its not a priority.
+I could rewrite the app to use SQLite, but with how generic this challenge is, it's not a priority.
