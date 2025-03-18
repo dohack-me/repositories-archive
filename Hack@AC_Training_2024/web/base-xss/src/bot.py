@@ -15,7 +15,7 @@ class Bot(Thread):
     def run(self):
         opts = FirefoxOptions()
         opts.add_argument("--headless")
-        driver = webdriver.Firefox(service=Service('./geckodriver'), options=opts)
+        driver = webdriver.Firefox(options=opts)
         driver.get(self.url)
         driver.add_cookie({'name' : 'username', 'value' : config["ADMINUSERNAME"]})
         driver.add_cookie({'name' : 'password', 'value' : config["ADMINPASSWORD"]})

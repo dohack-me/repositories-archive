@@ -1,8 +1,0 @@
-name: trainingweb
-
-services:
-  base-xss:
-    build: .
-    privileged: true
-    ports:
-      - "1004:5000"

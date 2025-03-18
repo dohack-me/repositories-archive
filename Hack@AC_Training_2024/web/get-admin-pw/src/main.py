@@ -38,4 +38,4 @@ def goIn():
         return "Noted with thanks!"
     return "Invalid username or password"
     
-app.run(host='0.0.0.0', port=5050)
+app.run(host='0.0.0.0')

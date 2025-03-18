@@ -1,7 +1,6 @@
-FROM python:3.9
-EXPOSE 5050
+FROM dohackme.azurecr.io/base_images/web:latest
 
-WORKDIR /app
-COPY build /app
-RUN pip install flask
-CMD ["python", "main.py"]
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
+
+COPY ./main.py /app/app.py

