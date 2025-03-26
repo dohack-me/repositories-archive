@@ -1,8 +1,5 @@
-FROM dohackme.azurecr.io/base_images/web:latest
+FROM dohackme.azurecr.io/base_images/web:flask
 
 RUN apk update && apk add chromium
-
-COPY ./requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
 
 COPY . /app

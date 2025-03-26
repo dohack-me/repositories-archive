@@ -38,11 +38,13 @@ def test_web_image(registry: str, repository: str, category: str, challenge: str
         name=challenge,
         auto_remove=True,
         detach=True,
-        ports={"5000/tcp": 5000}
+        publish_all_ports=True
     )
+    container.reload()
+    port = int(list(container.ports.values())[0][0]["HostPort"])
 
     try:
-        res = requests.get("http://localhost:5000/")
+        res = requests.get(f"http://localhost:{port}/")
         return res.status_code
     except requests.exceptions.ConnectionError:
         return -1

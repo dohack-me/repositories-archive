@@ -29,4 +29,4 @@ def admin():
         return render_template('nonAdmin.html')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5000)

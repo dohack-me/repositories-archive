@@ -22,5 +22,4 @@ def greet():
     return render_template_string(f"Damn. You like {comment}?")
 
 if __name__ == "__main__":
-    print(flask.__version__)
-    serve(app,host="0.0.0.0",port=5000)
+    serve(app, host="0.0.0.0", port=5000)

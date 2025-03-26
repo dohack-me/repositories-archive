@@ -19,4 +19,4 @@ def index():
     return f"<h1>Congratulations!</h1><p>Flag: {ffi.string(lib.get_flag()).decode()}</p>"
 
 # This is kinda needed too
-app.run(host="0.0.0.0", port=6969)
+app.run(host="0.0.0.0", port=5000)
