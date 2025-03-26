@@ -1,12 +1,12 @@
 import socket
-import time
 
 import docker
 import requests
 
-from utils import get_image_name
+from lib.utils import get_image_name
 
 client = docker.from_env()
+
 
 def test_image(registry: str, repository: str, category: str, challenge: str):
     image_name = f"{registry}/{get_image_name(repository, category, challenge)}"
@@ -14,16 +14,22 @@ def test_image(registry: str, repository: str, category: str, challenge: str):
         print(f"Testing {image_name}...")
         if (status_code := test_web_image(registry, repository, category, challenge)) == 200:
             print(f"Test passed for {image_name}")
+            return True
         elif status_code == -1:
             print(f"Test FAILED for {image_name}, received connection error")
+            return False
         else:
             print(f"Test FAILED for {image_name}, status code: {status_code}")
+            return False
     elif category == "pwn":
         print(f"Testing {image_name}...")
         if test_pwn_image(registry, repository, category, challenge):
             print(f"Test passed for {image_name}")
+            return True
         else:
             print(f"Test FAILED for {image_name}")
+            return False
+
 
 def test_web_image(registry: str, repository: str, category: str, challenge: str):
     image_name = f"{registry}/{get_image_name(repository, category, challenge)}"
@@ -42,6 +48,7 @@ def test_web_image(registry: str, repository: str, category: str, challenge: str
         return -1
     finally:
         container.stop()
+
 
 def test_pwn_image(registry: str, repository: str, category: str, challenge: str):
     image_name = f"{registry}/{get_image_name(repository, category, challenge)}"

@@ -2,9 +2,10 @@ import os
 
 import docker.errors
 
-from utils import get_image_name
+from lib.utils import get_image_name
 
 client = docker.from_env()
+
 
 def __find_dockerfile(repository: str, category: str, challenge: str):
     dockerfiles = []
@@ -12,7 +13,6 @@ def __find_dockerfile(repository: str, category: str, challenge: str):
         if "Dockerfile" in files:
             dockerfiles.append(root)
     return dockerfiles
-
 
 
 def build_image(registry: str, repository: str, category: str, challenge: str):
