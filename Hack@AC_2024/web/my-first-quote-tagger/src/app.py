@@ -1,15 +1,13 @@
-from flask import Flask, request, send_from_directory
+import base64
+import os
 import re
 import tarfile
-
 from io import BytesIO
-import os
-import base64
 
-
+from flask import Flask, request, send_from_directory
+from waitress import serve
 
 app = Flask(__name__)
-
 
 
 @app.route('/')
@@ -28,13 +26,13 @@ def download():
     else:
         return send_from_directory('signed_files', f'{file}.tar')
 
+
 @app.route('/sign', methods=['GET'])
 def sign():
     file_to_sign = request.args.get('file')
-    filename = request.args.get('filename')   
+    filename = request.args.get('filename')
     url = base64.b64decode(request.args.get('url'))
     _regex = re.compile(r'[a-zA-Z0-9]+')
-
 
     if not _regex.fullmatch(file_to_sign) or not _regex.fullmatch(filename):
         return 'Invalid file name'
@@ -47,13 +45,14 @@ def sign():
                 byteobj = BytesIO(b'Quote tagger generated output: ' + contents.encode() + b' url: ' + url + b'')
                 tarinfo = tarfile.TarInfo(f'{file_to_sign}.txt')
                 tarinfo.size = len(byteobj.getbuffer())
-                tf.addfile(tarinfo, fileobj = byteobj)
-            
+                tf.addfile(tarinfo, fileobj=byteobj)
+
             # check if the tarfile contains an unsplash url...im loyal to this service!
             with tarfile.open(f"signed_files/{filename}.tar", "r") as tf:
                 member = tf.extractfile(f'{file_to_sign}.txt')
                 contents = member.read().decode()
-                _filter = re.compile(r'(https|http)+:\/\/(?:[^\/]+\.)*images\.unsplash\.com\/photo([-|[a-z0-9A-Z])+\?(.*=.*)+')
+                _filter = re.compile(
+                    r'(https|http)+:\/\/(?:[^\/]+\.)*images\.unsplash\.com\/photo([-|[a-z0-9A-Z])+\?(.*=.*)+')
                 if not _filter.search(contents):
                     os.remove(f"signed_files/{filename}.tar")
                     return 'Invalid url! I told you to only use unsplash >:('
@@ -68,5 +67,6 @@ def sign():
         except:
             return 'Something went wrong :('
 
+
 if __name__ == '__main__':
-    app.run()
+    serve(app, host="0.0.0.0", port=5000)

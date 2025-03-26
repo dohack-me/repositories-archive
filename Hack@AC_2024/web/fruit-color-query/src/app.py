@@ -3,6 +3,7 @@ from flask import Flask, request
 from PIL import Image
 from PIL.ExifTags import TAGS
 from uuid import uuid4
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -98,4 +99,4 @@ def fruit():
         return "File type not allowed"
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=8080)
+    serve(app, host="0.0.0.0", port=5000)

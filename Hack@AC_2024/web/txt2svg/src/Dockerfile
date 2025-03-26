@@ -1,11 +1,9 @@
 FROM python:3.10
-EXPOSE 8080
-
-RUN mkdir /app
 WORKDIR /app
-COPY . /app
+EXPOSE 5000
 
-RUN pip install flask
-RUN pip install lxml==4.9.3
+RUN pip install flask waitress lxml==4.9.3
+
+COPY . /app
 
 CMD ["python3", "app.py"]

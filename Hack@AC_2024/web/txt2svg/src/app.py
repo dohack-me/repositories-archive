@@ -2,6 +2,8 @@ from flask import Flask, render_template, send_file, request
 from generatesvg import image
 from uuid import uuid4
 
+from waitress import serve
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -21,4 +23,4 @@ def create():
     return send_file(filename, mimetype='image/svg+xml')
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=8080)
+    serve(app, host="0.0.0.0", port=5000)

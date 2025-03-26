@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import os
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -23,4 +24,4 @@ def guide():
     return render_template('guide.html')
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=8080)
+    serve(app, host="0.0.0.0", port=5000)

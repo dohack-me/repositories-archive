@@ -2,6 +2,7 @@ import socket
 
 import docker
 import requests
+from requests.adapters import HTTPAdapter, Retry
 
 from lib.utils import get_image_name
 
@@ -44,7 +45,9 @@ def test_web_image(registry: str, repository: str, category: str, challenge: str
     port = int(list(container.ports.values())[0][0]["HostPort"])
 
     try:
-        res = requests.get(f"http://localhost:{port}/")
+        s = requests.Session()
+        s.mount('http://', HTTPAdapter(max_retries=Retry(total=5)))
+        res = s.get(f"http://localhost:{port}/", )
         return res.status_code
     except requests.exceptions.ConnectionError:
         return -1
