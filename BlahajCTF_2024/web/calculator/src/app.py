@@ -40,4 +40,4 @@ def bug_report():
     return render_template('bug_report.html', page = PAGE)
 
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=8000)
+    serve(app, host='0.0.0.0', port=5000)

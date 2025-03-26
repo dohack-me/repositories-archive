@@ -1,6 +1,6 @@
 FROM zenika/alpine-chrome:with-puppeteer
 WORKDIR /app
-EXPOSE 8000
+EXPOSE 5000
 
 USER root
 

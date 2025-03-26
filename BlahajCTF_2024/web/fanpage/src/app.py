@@ -105,4 +105,4 @@ def admin():
     return '<h1>Admin Panel</h1><p>Welcome to the admin panel! Your flag is: blahaj{Jwt_BrUt3f0Rc3_9291}</p>'
 
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=8000)
+    serve(app, host='0.0.0.0', port=5000)

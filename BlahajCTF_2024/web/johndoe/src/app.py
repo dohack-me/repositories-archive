@@ -33,4 +33,4 @@ def secret():
         return "Only connections from trusted IP 69.42.123.69 can access this page. If you are John Doe, please disable your proxy/VPN and try again.", 403
 
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=8000)
+    serve(app, host='0.0.0.0', port=5000)

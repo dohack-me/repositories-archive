@@ -2,8 +2,9 @@ import os
 
 import docker.errors
 
+from utils import get_image_name
+
 client = docker.from_env()
-REGISTRY = "dohackme.azurecr.io"
 
 def __find_dockerfile(repository: str, category: str, challenge: str):
     dockerfiles = []
@@ -12,16 +13,11 @@ def __find_dockerfile(repository: str, category: str, challenge: str):
             dockerfiles.append(root)
     return dockerfiles
 
-def __clean(value):
-    value = "".join(char.lower() for char in value if char.isalnum() or char in ["-", "_"])
-    return value
 
-def __get_image_name(repository: str, category: str, challenge: str):
-    return f"{__clean(repository)}/{__clean(category)}/{__clean(challenge)}"
 
-def build_image(repository: str, category: str, challenge: str):
+def build_image(registry: str, repository: str, category: str, challenge: str):
     dockerfiles = __find_dockerfile(repository, category, challenge)
-    image_name = __get_image_name(repository, category, challenge)
+    image_name = get_image_name(repository, category, challenge)
     if len(dockerfiles) != 1:
         print(f"More or less than one Dockerfile found in {image_name}!")
         return
@@ -33,8 +29,10 @@ def build_image(repository: str, category: str, challenge: str):
             tag=image_name,
             rm=True,
         )
-        image.tag(f"{REGISTRY}/{image_name}")
-        print(f"Successfully built {REGISTRY}/{image_name}")
+        image.tag(f"{registry}/{image_name}")
+        print(f"Successfully built {registry}/{image_name}")
+        return True
     except docker.errors.BuildError as ex:
-        print(f"FAILED to build {REGISTRY}/{image_name}")
+        print(f"FAILED to build {registry}/{image_name}")
         print(ex)
+        return False
