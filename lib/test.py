@@ -1,4 +1,5 @@
 import socket
+import time
 
 import docker
 import requests
@@ -46,14 +47,14 @@ def test_web_image(registry: str, repository: str, category: str, challenge: str
 
     try:
         s = requests.Session()
-        s.mount('http://', HTTPAdapter(max_retries=Retry(total=5)))
-        res = s.get(f"http://localhost:{port}/", )
-        return res.status_code
-    except requests.exceptions.ConnectionError:
-        return -1
-    finally:
+        s.mount('http://', HTTPAdapter(max_retries=Retry(total=10, backoff_factor=1, backoff_max=5)))
+        res = s.get(f"http://localhost:{port}/")
         container.stop()
 
+        return res.status_code
+    except requests.exceptions.ConnectionError as ex:
+        print(ex)
+        return -1
 
 def test_pwn_image(registry: str, repository: str, category: str, challenge: str):
     image_name = f"{registry}/{get_image_name(repository, category, challenge)}"

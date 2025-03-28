@@ -1,9 +1,3 @@
-FROM php:8.3.7-apache
-EXPOSE 80
+FROM dohackme.azurecr.io/base_images/web:apache
 
-COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY ports.conf /etc/apache2/ports.conf
-
-COPY src /var/www/html/
-
-CMD ["apache2-foreground"]
+COPY . /var/www/html/

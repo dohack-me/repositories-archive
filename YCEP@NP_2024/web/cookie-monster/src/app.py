@@ -1,6 +1,8 @@
 from flask import Flask, request, make_response, render_template, send_from_directory
 import base64
 
+from waitress import serve
+
 app = Flask(__name__)
 
 def set_cookie(response, key, value, secure=True, httponly=True):
@@ -29,4 +31,4 @@ def admin():
         return render_template('nonAdmin.html')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    serve(app, host="0.0.0.0", port=5000)

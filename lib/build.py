@@ -20,7 +20,7 @@ def build_image(registry: str, repository: str, category: str, challenge: str):
     image_name = get_image_name(repository, category, challenge)
     if len(dockerfiles) != 1:
         print(f"More or less than one Dockerfile found in {image_name}!")
-        return
+        return False
     dockerfile = dockerfiles[0]
     print(f"Building {image_name}...")
     try:
