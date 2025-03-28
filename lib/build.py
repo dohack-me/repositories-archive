@@ -24,12 +24,11 @@ def build_image(registry: str, repository: str, category: str, challenge: str):
     dockerfile = dockerfiles[0]
     print(f"Building {image_name}...")
     try:
-        image, log = client.images.build(
+        client.images.build(
             path=dockerfile,
-            tag=image_name,
+            tag=f"{registry}/{image_name}",
             rm=True,
         )
-        image.tag(f"{registry}/{image_name}")
         print(f"Successfully built {registry}/{image_name}")
         return True
     except docker.errors.BuildError as ex:

@@ -6,6 +6,8 @@ import sqlite3
 import random, string
 from bot import Bot
 
+from waitress import serve
+
 app = Flask(__name__)
 
 blacklist = ['script','javascript','js','onerror','onload','onmouseover','onclick','src','(',')']
@@ -52,4 +54,5 @@ def retrieve(uid):
     data = str(cur.fetchall()[0][0])
     return render_template('return.html', data=data, uid=f"Retrieved with UID: {uid}")
 
-app.run(port=int(config["PORT"]), host="0.0.0.0")
+if __name__ == '__main__':
+    serve(app, host="0.0.0.0", port=5000)

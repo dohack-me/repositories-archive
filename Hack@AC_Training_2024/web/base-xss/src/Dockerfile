@@ -1,7 +1,6 @@
-FROM dohackme.azurecr.io/base_images/web:latest
+FROM dohackme.azurecr.io/base_images/web:flask
 
-COPY ./requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install selenium python-dotenv
 
 RUN apk add --no-cache ca-certificates curl firefox geckodriver
 
