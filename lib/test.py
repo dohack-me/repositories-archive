@@ -31,6 +31,8 @@ def test_image(registry: str, repository: str, category: str, challenge: str):
         else:
             print(f"Test FAILED for {image_name}")
             return False
+    else:
+        return True
 
 
 def test_web_image(registry: str, repository: str, category: str, challenge: str):

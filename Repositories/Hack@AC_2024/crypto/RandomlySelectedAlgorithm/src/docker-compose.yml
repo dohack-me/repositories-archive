@@ -1,8 +1,0 @@
-name: crypto
-version: "3.9"
-
-services:
-  randomly-selected-algorithm:
-    build: .
-    ports:
-      - "3000:80"

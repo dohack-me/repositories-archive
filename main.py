@@ -17,13 +17,13 @@ for repository in repositories:
     for category in categories:
         challenges = lib.input.get_challenge_input(BASE_PATH, repository, category)
         for challenge in challenges:
-            built = lib.build.build_image(REGISTRY, repository, category, challenge)
+            built = lib.build.build_image(BASE_PATH, REGISTRY, repository, category, challenge)
             if built:
                 if lib.test.test_image(REGISTRY, repository, category, challenge):
                     successes.append((REGISTRY, repository, category, challenge))
 
 lib.utils.print_line()
 
-if (input("Build all successful images? (Y/n) ") or "y").lower() == "y":
+if (input("Push all successful images? (Y/n) ") or "y").lower() == "y":
     for success in successes:
         lib.push.push_image(success[0], success[1], success[2], success[3])
