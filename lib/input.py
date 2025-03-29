@@ -30,13 +30,13 @@ def __get_input(target_name: str, root_dir: str) -> list[str]:
     return result_targets
 
 
-def get_repository_input() -> list[str]:
-    return __get_input("repositories", os.getcwd())
+def get_repository_input(base_path: str) -> list[str]:
+    return __get_input("repositories", base_path)
 
 
-def get_category_input(repository: str) -> list[str]:
-    return __get_input("categories", os.path.join(os.getcwd(), repository))
+def get_category_input(base_path: str, repository: str) -> list[str]:
+    return __get_input("categories", os.path.join(base_path, repository))
 
 
-def get_challenge_input(repository: str, challenge: str) -> list[str]:
-    return __get_input("challenges", os.path.join(os.getcwd(), repository, challenge))
+def get_challenge_input(base_path: str, repository: str, challenge: str) -> list[str]:
+    return __get_input("challenges", os.path.join(base_path, repository, challenge))

@@ -1,3 +1,5 @@
+import os
+
 import lib.input
 import lib.build
 import lib.test
@@ -5,14 +7,15 @@ import lib.utils
 import lib.push
 
 REGISTRY = "dohackme.azurecr.io"
+BASE_PATH = os.path.join(os.getcwd(), "Repositories")
 
 successes = []
 
-repositories = lib.input.get_repository_input()
+repositories = lib.input.get_repository_input(BASE_PATH)
 for repository in repositories:
-    categories = lib.input.get_category_input(repository)
+    categories = lib.input.get_category_input(BASE_PATH, repository)
     for category in categories:
-        challenges = lib.input.get_challenge_input(repository, category)
+        challenges = lib.input.get_challenge_input(BASE_PATH, repository, category)
         for challenge in challenges:
             built = lib.build.build_image(REGISTRY, repository, category, challenge)
             if built:
