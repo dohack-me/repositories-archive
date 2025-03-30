@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Build Apache Base Image" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+  <configuration default="false" name="Build Web Apache Base Image" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="dohackme.azurecr.io/base_images/web:apache" />
