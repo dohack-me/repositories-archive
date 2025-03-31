@@ -1,7 +1,7 @@
-FROM dohackme.azurecr.io/base_images/pwn:latest
+FROM dohackme.azurecr.io/base_images/pwn:debian
 
-COPY ./chall /srv/app/run
-RUN chmod 555 /srv/app/run
+COPY flag.txt /app/flag.txt
+RUN chmod 444 /app/flag.txt
 
-COPY ./flag.txt /srv/app/flag.txt
-RUN chmod 444 /srv/app/flag.txt
+COPY chall /app/run
+RUN chmod +x /app/run
