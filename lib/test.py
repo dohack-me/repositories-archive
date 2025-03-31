@@ -1,17 +1,16 @@
 import socket
-import time
 
 import docker
 import requests
 from requests.adapters import HTTPAdapter, Retry
 
-from lib.utils import get_image_name
+from lib import utils
 
 client = docker.from_env()
 
 
 def test_image(registry: str, repository: str, category: str, challenge: str):
-    image_name = f"{registry}/{get_image_name(repository, category, challenge)}"
+    image_name = f"{registry}/{utils.get_image_name(repository, category, challenge)}"
     if category == "web":
         print(f"Testing {image_name}...")
         if (status_code := test_web_image(registry, repository, category, challenge)) == 200:
@@ -36,10 +35,10 @@ def test_image(registry: str, repository: str, category: str, challenge: str):
 
 
 def test_web_image(registry: str, repository: str, category: str, challenge: str):
-    image_name = f"{registry}/{get_image_name(repository, category, challenge)}"
+    image_name = f"{registry}/{utils.get_image_name(repository, category, challenge)}"
     container = client.containers.run(
         image=image_name,
-        name=challenge,
+        name=utils.clean(challenge),
         auto_remove=True,
         detach=True,
         publish_all_ports=True
@@ -59,10 +58,10 @@ def test_web_image(registry: str, repository: str, category: str, challenge: str
         return -1
 
 def test_pwn_image(registry: str, repository: str, category: str, challenge: str):
-    image_name = f"{registry}/{get_image_name(repository, category, challenge)}"
+    image_name = f"{registry}/{utils.get_image_name(repository, category, challenge)}"
     container = client.containers.run(
         image=image_name,
-        name=challenge,
+        name=utils.clean(challenge),
         auto_remove=True,
         detach=True,
         ports={"8000/tcp": 8000}

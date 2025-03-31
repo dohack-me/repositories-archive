@@ -1,6 +1,0 @@
-services:
-  enotes:
-    privileged: false
-    build: .
-    ports:
-      - "8000:8400"

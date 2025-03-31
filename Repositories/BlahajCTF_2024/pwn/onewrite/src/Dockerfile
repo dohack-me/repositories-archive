@@ -1,22 +1,13 @@
-FROM debian:12-slim
-WORKDIR /srv/app
-EXPOSE 8000
+FROM dohackme.azurecr.io/base_images/pwn:debian
 
-RUN apt-get update && apt-get install -y socat
+COPY ld-linux-x86-64.so.2 /app/ld-linux-x86-64.so.2
+RUN chmod 555 /app/ld-linux-x86-64.so.2
 
-COPY ./libc.so.6 /srv/app/libc.so.6
-RUN chmod 555 /srv/app/libc.so.6
+COPY libc.so.6 /app/libc.so.6
+RUN chmod 555 /app/libc.so.6
 
-COPY ./ld-linux-x86-64.so.2 /srv/app/ld-linux-x86-64.so.2
-RUN chmod 555 /srv/app/ld-linux-x86-64.so.2
+COPY flag.txt /app/flag.txt
+RUN chmod 444 /app/flag.txt
 
-COPY ./entry.sh /srv/app/entry.sh
-RUN chmod 555 /srv/app/entry.sh
-
-COPY ./flag.txt /srv/app/flag.txt
-RUN chmod 444 /srv/app/flag.txt
-
-COPY ./chal /srv/app/run
-RUN chmod 555 /srv/app/run
-
-CMD ["/srv/app/entry.sh"]
+COPY chal /app/run
+RUN chmod +x /app/run
