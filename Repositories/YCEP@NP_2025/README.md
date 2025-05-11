@@ -23,3 +23,14 @@ Distributed files not available.
   - Crazy Cipher
 
 Challenge was moved to `crypto`.
+
+- pwn
+  - train_bank
+
+Turned off buffering for `stdout` and `stdin` to fix image. Distributed source code was also changed.
+
+- pwn
+  - train_bank
+  - train_bofchall
+
+No compiled binaries were provided. They were compiled by myself with `gcc chal.c -no-pie -o chal`

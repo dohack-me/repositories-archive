@@ -16,6 +16,9 @@ void withdraw(int32_t *balance, int32_t amount) {
 }
 
 int main() {
+    setbuf(stdout, NULL);
+    setbuf(stdin, NULL);
+
     int32_t balance = 0;
     int32_t amount;
 
