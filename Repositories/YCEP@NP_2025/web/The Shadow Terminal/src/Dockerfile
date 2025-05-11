@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM dohackme.azurecr.io/base_images/web:apache
 
 RUN apt-get update && apt-get install -y \
     libpng-dev \
@@ -11,14 +11,6 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN a2enmod rewrite
-
-WORKDIR /var/www/html
-
-COPY src/ /var/www/html/
+COPY src/* /var/www/html/
 
 RUN composer install --no-dev --prefer-dist
-
-EXPOSE 80
-
-CMD ["apache2-foreground"]
